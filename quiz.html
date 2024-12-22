@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokenTrip</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="quiz.css">
+
+    
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="top-bar">
+            <img src=".png" class="logo">
+            <div class="logo">TokenTrip</div>
+            <div class="account">
+                <button class="login-btn" id="openModal">Login or Create Account</button>
+            </div>
+        </div>
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="home.html" ><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="fpage.php" ><i class="fas fa-plane"></i> Flights</a></li>
+                <li><a href="hotel.html"><i class="fas fa-hotel"></i> Hotels</a></li>
+                <li><a href="#"><i class="fas fa-home"></i> Homestays & Villas</a></li>
+                <li><a href="#"><i class="fas fa-umbrella-beach"></i> Holiday Packages</a></li>
+                <li><a href="#"><i class="fas fa-train"></i> Trains</a></li>
+                <li><a href="#"><i class="fas fa-bus"></i> Buses</a></li>
+                <li><a href="#"><i class="fas fa-taxi"></i> Cabs</a></li>
+                <li><a href="games.html"><i class="fas fa-game"></i> Games</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Search Section -->
+    <main>
+        <section class="quiz-container">
+            <form id="quiz-form">
+                <div id="quiz"></div>
+                <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+                <div id="result"></div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const questions = [
+            {
+                question: "Which country has the most UNESCO World Heritage Sites?",
+                options: ["China", "Italy", "France", "India"],
+                correctAnswer: 1
+            },
+            {
+                question: "In which country can you find the ancient city of Machu Picchu?",
+                options: ["Brazil", "Peru", "Colombia", "Bolivia"],
+                correctAnswer: 1
+            },
+            {
+                question: "What is the name of the famous archaeological site in Jordan?",
+                options: ["Petra", "Luxor", "Machu Picchu", "Angkor Wat"],
+                correctAnswer: 0
+            },
+            {
+                question: "What is the traditional drink of Argentina made from steeped herbs?",
+                options: ["Chai", "Espresso", "Mojito", "Mate"],
+                correctAnswer: 3
+            },
+            {
+                question: "Which famous festival in Brazil is known for its parades, music, and dance?",
+                options: ["Oktoberfest", "Carnival", "Day of the Dead", "Mardi Gras"],
+                correctAnswer: 1
+            }
+        ];
+
+        function generateQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+            questions.forEach((q, index) => {
+                const questionSection = document.createElement('section');
+                questionSection.classList.add('question-section');
+                questionSection.innerHTML = `
+                    <div class="question-title">${index + 1}. ${q.question}</div>
+                    <ul class="options">
+                        ${q.options.map((option, i) => `
+                            <li>
+                                <label>
+                                    <input type="radio" name="question${index}" value="${i}">
+                                    ${option}
+                                </label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                quizContainer.appendChild(questionSection);
+            });
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selectedOption && parseInt(selectedOption.value) === q.correctAnswer) {
+                    score++;
+                }
+            });
+        
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}`;
+        }
+        
+        generateQuiz();
+    </script>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 TokenTrip | Lowest Exchange Rates Guaranteed</p>
+    </footer>
+</body>
+</html>
